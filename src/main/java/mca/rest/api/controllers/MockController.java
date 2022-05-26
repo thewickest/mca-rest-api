@@ -17,7 +17,7 @@ public class MockController {
 	 * @param productId The Id of the product
 	 * @return An array with the Ids of similiar products
 	 */
-	public static int[] getSimilarIds(String productId) {
+	public static int[] getSimilarIds(String productId) throws Exception{
 		RestTemplate restTemplate = new RestTemplate();
 		StringBuilder uri = new StringBuilder(uriMock);
 		uri.append(String.format(similarIds, productId));
@@ -30,7 +30,7 @@ public class MockController {
 	 * @param productId The Id of the product
 	 * @return A JsonObject of the product
 	 */
-	public static JSONObject getProduct(int productId) {
+	public static JSONObject getProduct(int productId) throws Exception{
 		JSONParser parser = new JSONParser();
 		
 		RestTemplate restTemplate = new RestTemplate();
@@ -40,7 +40,6 @@ public class MockController {
 		JSONObject json = null;
 		try {
 			json = (JSONObject) parser.parse(res);
-			System.out.println(json);
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}

@@ -23,7 +23,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 @RunWith(OrderedTestRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
-public class GreetingsControllerTest {
+public class ApiControllerTest {
     @ClassRule
     public static final SpringClassRule springClassRule = new SpringClassRule();
 
@@ -38,12 +38,12 @@ public class GreetingsControllerTest {
 
     @BeforeClass
     public static void setUpClass() {
-        TestWatchman.watchman.registerClass(GreetingsControllerTest.class);
+        TestWatchman.watchman.registerClass(ApiControllerTest.class);
     }
 
     @AfterClass
     public static void tearDownClass() {
-        TestWatchman.watchman.createReport(GreetingsControllerTest.class);
+        TestWatchman.watchman.createReport(ApiControllerTest.class);
     }
 
     /**
@@ -55,7 +55,7 @@ public class GreetingsControllerTest {
     @Test
     @Order(1)
     public void greetJava() throws Exception {
-        String response = mockMvc.perform(MockMvcRequestBuilders.get("/Java"))
+        String response = mockMvc.perform(MockMvcRequestBuilders.get("/1"))
             .andExpect(MockMvcResultMatchers.status().isOk())
             .andReturn()
             .getResponse()
@@ -70,33 +70,33 @@ public class GreetingsControllerTest {
      *
      * It tests response to be "Hello Spring!"
      */
-    @Test
-    @Order(2)
-    public void greetSpring() throws Exception {
-        String response = mockMvc.perform(MockMvcRequestBuilders.get("/Spring"))
-            .andExpect(MockMvcResultMatchers.status().isOk())
-            .andReturn()
-            .getResponse()
-            .getContentAsString();
-
-        Assert.assertEquals(response, "Hello Spring!");
-    }
-
-    /**
-     *
-     * @throws Exception
-     *
-     * It tests response to be "Hello RodJohnson!"
-     */
-    @Test
-    @Order(3)
-    public void greetRodJohnson() throws Exception {
-        String response = mockMvc.perform(MockMvcRequestBuilders.get("/RodJohnson"))
-            .andExpect(MockMvcResultMatchers.status().isOk())
-            .andReturn()
-            .getResponse()
-            .getContentAsString();
-
-        Assert.assertEquals(response, "Hello RodJohnson!");
-    }
+//    @Test
+//    @Order(2)
+//    public void greetSpring() throws Exception {
+//        String response = mockMvc.perform(MockMvcRequestBuilders.get("/Spring"))
+//            .andExpect(MockMvcResultMatchers.status().isOk())
+//            .andReturn()
+//            .getResponse()
+//            .getContentAsString();
+//
+//        Assert.assertEquals(response, "Hello Spring!");
+//    }
+//
+//    /**
+//     *
+//     * @throws Exception
+//     *
+//     * It tests response to be "Hello RodJohnson!"
+//     */
+//    @Test
+//    @Order(3)
+//    public void greetRodJohnson() throws Exception {
+//        String response = mockMvc.perform(MockMvcRequestBuilders.get("/RodJohnson"))
+//            .andExpect(MockMvcResultMatchers.status().isOk())
+//            .andReturn()
+//            .getResponse()
+//            .getContentAsString();
+//
+//        Assert.assertEquals(response, "Hello RodJohnson!");
+//    }
 }

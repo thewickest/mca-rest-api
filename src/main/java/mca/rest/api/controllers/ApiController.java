@@ -28,11 +28,17 @@ public class ApiController {
     				produces = "application/json")
     @ResponseStatus(HttpStatus.OK)
     public JSONArray getSimilar(@PathVariable String productId) {
-    	int[] array = MockController.getSimilarIds(productId);
+
     	JSONArray res = new JSONArray();
-        for(int i=0; i<array.length; i++) {
-        	res.add(MockController.getProduct(array[i]));
-        }
-        return res;
+    	
+    	try {
+	    	int[] array = MockController.getSimilarIds(productId);
+	        for(int i=0; i<array.length; i++) {
+	        	res.add(MockController.getProduct(array[i]));
+	        }
+	        return res;
+    	}catch(Exception e) {
+    		return res;
+    	}
     }
 }
