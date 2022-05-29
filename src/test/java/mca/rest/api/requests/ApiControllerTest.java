@@ -47,56 +47,54 @@ public class ApiControllerTest {
     }
 
     /**
+     *	Tests if a product that exists is return
      *
      * @throws Exception
      *
-     * It tests response to be "Hello Java!"
      */
     @Test
     @Order(1)
-    public void greetJava() throws Exception {
-        String response = mockMvc.perform(MockMvcRequestBuilders.get("/1"))
+    public void testExists() throws Exception {
+        String response = mockMvc
+        		.perform(MockMvcRequestBuilders.get("/product/1/similar"))
             .andExpect(MockMvcResultMatchers.status().isOk())
             .andReturn()
             .getResponse()
             .getContentAsString();
 
-        Assert.assertEquals(response, "Hello Java!");
+        String expected = "[{\"price\":19.99,\"name\":\"Dress\",\"id\":\"2\",\"availability\":true},{\"price\":29.99,\"name\":\"Blazer\",\"id\":\"3\",\"availability\":false},{\"price\":39.99,\"name\":\"Boots\",\"id\":\"4\",\"availability\":true}]";
+        Assert.assertEquals(response, expected);
     }
-
+    
     /**
-     *
+     * Test if a product that not exists returns 404
+     * 
      * @throws Exception
-     *
-     * It tests response to be "Hello Spring!"
      */
-//    @Test
-//    @Order(2)
-//    public void greetSpring() throws Exception {
-//        String response = mockMvc.perform(MockMvcRequestBuilders.get("/Spring"))
-//            .andExpect(MockMvcResultMatchers.status().isOk())
-//            .andReturn()
-//            .getResponse()
-//            .getContentAsString();
-//
-//        Assert.assertEquals(response, "Hello Spring!");
-//    }
-//
-//    /**
-//     *
-//     * @throws Exception
-//     *
-//     * It tests response to be "Hello RodJohnson!"
-//     */
-//    @Test
-//    @Order(3)
-//    public void greetRodJohnson() throws Exception {
-//        String response = mockMvc.perform(MockMvcRequestBuilders.get("/RodJohnson"))
-//            .andExpect(MockMvcResultMatchers.status().isOk())
-//            .andReturn()
-//            .getResponse()
-//            .getContentAsString();
-//
-//        Assert.assertEquals(response, "Hello RodJohnson!");
-//    }
+    @Test
+    @Order(2)
+    public void testNotFound() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get("/notExists"))
+            .andExpect(MockMvcResultMatchers.status().isNotFound())
+        .andReturn();
+    }
+    
+    
+    /**
+     * Tests if a product that don't exists is returned as empty
+     * 
+     * @throws Exception
+     */
+    @Test
+    @Order(3)
+    public void testEmpty() throws Exception {
+    	String response = mockMvc.perform(MockMvcRequestBuilders.get("/product/66/similar"))
+        .andExpect(MockMvcResultMatchers.status().isOk())
+        .andReturn()
+        .getResponse()
+        .getContentAsString();
+    	
+    	String expected = "[]";
+    	Assert.assertEquals(response, expected);
+    }
 }
